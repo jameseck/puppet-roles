@@ -16,5 +16,8 @@ class roles::elbuild (
   package { 'fakeroot':
     ensure => installed,
   }
+  package { 'rpmlint':
+    ensure => installed,
+  }
 
 }
