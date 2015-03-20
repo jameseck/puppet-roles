@@ -10,4 +10,8 @@ class roles::elbuild (
     provider => 'shell',
   }
 
+  package { 'maven':
+    ensure => installed,
+  }
+
 }
