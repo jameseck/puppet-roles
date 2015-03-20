@@ -13,5 +13,8 @@ class roles::elbuild (
   package { 'maven':
     ensure => installed,
   }
+  package { 'fakeroot':
+    ensure => installed,
+  }
 
 }
