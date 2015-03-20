@@ -19,5 +19,8 @@ class roles::elbuild (
   package { 'rpmlint':
     ensure => installed,
   }
+  package { 'rpmdevtools':
+    ensure => installed,
+  }
 
 }
