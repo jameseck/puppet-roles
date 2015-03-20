@@ -9,8 +9,4 @@ class roles::elbuild (
     provider => 'shell',
   }
 
-  package { 'Development Tools':
-    ensure => installed,
-  }
-
 }
