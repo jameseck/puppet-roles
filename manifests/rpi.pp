@@ -1,6 +1,8 @@
 class roles::rpi (
 ) {
 
+  include '::profiles::base'
+
   include '::keepalived'
   keepalived::vrrp::instance { 'VI_DNS':
     interface         => 'eth0',
