@@ -1,14 +1,5 @@
-class roles::foreman (
+class roles::rpi (
 ) {
-
-  sudo::conf { 'foreman-proxy-puppetcert':
-    priority => 10,
-    content  => 'foreman-proxy ALL = NOPASSWD: /usr/bin/puppet cert *',
-  }
-  sudo::conf { 'foreman-proxy-norequiretty':
-    priority => 11,
-    content  => 'Defaults:foreman-proxy !requiretty',
-  }
 
   include '::keepalived'
   keepalived::vrrp::instance { 'VI_DNS':
