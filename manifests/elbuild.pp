@@ -1,7 +1,6 @@
 class roles::elbuild (
 ) {
 
-  include '::profiles::base'
   include '::java'
 
   exec { 'yum groupinstall Development Tools':
