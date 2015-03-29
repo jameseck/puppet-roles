@@ -11,6 +11,11 @@ class roles::media (
   # https://github.com/EugeneKay/subsonic
 
 
+  $package_list = [ 'openjdk-7-jdk', 'maven', 'lintian', 'fakeroot', 'nfs-common', ]
+
+  package { $package_list:
+    ensure => installed,
+  } ->
   file { '/mnt/nasb':
     ensure => directory,
   } ->
@@ -22,25 +27,17 @@ class roles::media (
     atboot  => true,
   }
 
-  $package_list = [ 'openjdk-7-jdk', 'maven', 'lintian', 'fakeroot', ]
-
-  package { $package_list:
-    ensure => installed,
-  }
-
   file { '/home/james/gittmp':
     ensure => directory,
     owner  => 'james',
     group  => 'james',
     mode   => '0755',
-  }
-
+  } ->
   vcsrepo { '/home/james/gittmp/subsonic':
     ensure   => present,
     provider => 'git',
     source   => 'https://github.com/EugeneKay/subsonic',
-  }
-
+  } ->
   file { '/etc/default/subsonic':
     ensure => file,
     owner  => 'root',
