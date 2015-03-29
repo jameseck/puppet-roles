@@ -14,7 +14,7 @@
 #
 # SUBSONIC_ARGS="--port=80 --https-port=443 --max-memory=200"
 
-SUBSONIC_ARGS="--max-memory=150 --https-port=8443 --port=8080 --host=0.0.0.0"
+SUBSONIC_ARGS="--max-memory=150 --https-port=8443 --port=8080 --host=0.0.0.0 -Dsubsonic.ssl.keystore=/var/subsonic/subsonic.keystore -Dsubsonic.ssl.password=subsonic"
 
 # The user which should run the Subsonic process. Default "root".
 # Note that non-root users are by default not allowed to use ports
