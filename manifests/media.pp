@@ -11,11 +11,12 @@ class roles::media (
   # https://github.com/EugeneKay/subsonic
 
 
-
   mount { '/mnt/nasb':
-    device => 'nasb.je.home:/data',
-    fstype => 'nfs4',
-    atboot => true,
+    ensure  => 'mounted',
+    device  => 'nasb.je.home:/data',
+    fstype  => 'nfs4',
+    options => 'defaults',
+    atboot  => true,
   }
 
   $package_list = [ 'openjdk-7-jdk', 'maven', 'lintian', 'fakeroot', ]
