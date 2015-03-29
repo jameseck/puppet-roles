@@ -14,8 +14,8 @@ class roles::leecher (
     source   => 'https://github.com/Novik/ruTorrent',
   } ->
   nginx::resource::vhost { 'rutorrent':
-    www_root         => '/opt/rutorrent',
-    vhost_cfg_append => {
+    www_root            => '/opt/rutorrent',
+    location_cfg_append => {
       'include'   => 'scgi_params',
       'scgi_pass' => 'localhost:5000',
     },
