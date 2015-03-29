@@ -17,7 +17,7 @@ class roles::media (
     atboot => true,
   }
 
-  $package_list = [ 'openjdk-7-jdk', 'maven', 'lintian', ]
+  $package_list = [ 'openjdk-7-jdk', 'maven', 'lintian', 'fakeroot', ]
 
   package { $package_list:
     ensure => installed,
