@@ -23,7 +23,6 @@ class roles::media (
     ensure => installed,
   }
 
-
   file { '/home/james/gittmp':
     ensure => directory,
     owner  => 'james',
@@ -37,5 +36,16 @@ class roles::media (
     source   => 'https://github.com/EugeneKay/subsonic',
   }
 
+  file { '/etc/default/subsonic':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/roles/media/_etc_default_subsonic',
+  } ->
+  service { 'subsonic':
+    ensure => running,
+    enable => true,
+  }
 
 }
