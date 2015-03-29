@@ -1,6 +1,8 @@
 class roles::media (
 ) {
 
+  include '::git'
+
   # Describes the subsonic server
 
   # We'll also put the build requirements on this server,
