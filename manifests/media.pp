@@ -19,6 +19,10 @@ class roles::media (
 
   $package_list = [ 'openjdk-7-jdk', 'maven', 'lintian', ]
 
+  package { $package_list:
+    ensure => installed,
+  }
+
 
   file { '/home/james/gittmp':
     ensure => directory,
