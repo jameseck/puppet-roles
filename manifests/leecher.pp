@@ -8,6 +8,10 @@ class roles::leecher (
     ensure => installed,
   }
 
+  package { 'php':
+    ensure => installed,
+  }
+
   vcsrepo { '/opt/rutorrent':
     ensure   => present,
     provider => 'git',
@@ -19,6 +23,28 @@ class roles::leecher (
       'include'   => 'scgi_params',
       'scgi_pass' => 'localhost:5000',
     },
+  }
+
+  file { '/mnt/nasa':
+    ensure => directory,
+  } ->
+  mount { '/mnt/nasa':
+    ensure  => 'mounted',
+    device  => 'nasa.je.home:/data',
+    fstype  => 'nfs4',
+    options => 'defaults',
+    atboot  => true,
+  }
+
+  file { '/mnt/nasb':
+    ensure => directory,
+  } ->
+  mount { '/mnt/nasb':
+    ensure  => 'mounted',
+    device  => 'nasb.je.home:/data',
+    fstype  => 'nfs4',
+    options => 'defaults',
+    atboot  => true,
   }
 
 }
