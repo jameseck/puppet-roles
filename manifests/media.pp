@@ -13,8 +13,7 @@ class roles::media (
 
   file { '/mnt/nasb':
     ensure => directory,
-  }
-
+  } ->
   mount { '/mnt/nasb':
     ensure  => 'mounted',
     device  => 'nasb.je.home:/data',
