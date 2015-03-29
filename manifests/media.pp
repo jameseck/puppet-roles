@@ -13,6 +13,7 @@ class roles::media (
 
 
   mount { '/mnt/nasb':
+    device => 'nasb.je.home:/data',
     fstype => 'nfs4',
     atboot => true,
   }
