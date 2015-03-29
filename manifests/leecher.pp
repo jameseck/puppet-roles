@@ -25,6 +25,9 @@ class roles::leecher (
     },
   }
 
+  package { 'nfs-utils':
+    ensure => installed,
+  } ->
   file { '/mnt/nasa':
     ensure => directory,
   } ->
