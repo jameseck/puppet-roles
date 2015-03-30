@@ -3,7 +3,12 @@ class roles::leecher (
 
   include '::git'
   include '::nginx'
-  include '::sabnzbd'
+
+  class { 'sabnzbd':
+    user     => 'james',
+    group    => 'james',
+    home_dir => '/home/james/.sabnzbd',
+  }
 
   class { 'profiles::atrpms':
     atrpms_include => 'unrar*',
