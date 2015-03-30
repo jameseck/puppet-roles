@@ -16,6 +16,10 @@ class roles::leecher (
     ensure => installed,
   }
 
+  package { 'unrar':
+    ensure => installed,
+  }
+
   vcsrepo { '/opt/rutorrent':
     ensure   => present,
     provider => 'git',
