@@ -4,7 +4,7 @@ class roles::leecher (
   include '::git'
   include '::nginx'
   class { 'profiles::atrpms':
-    atrpms_include => 'unrar',
+    atrpms_include => 'unrar*',
     atrpms_exclude => '*',
   }
 
