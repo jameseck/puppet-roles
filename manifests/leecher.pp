@@ -3,6 +3,10 @@ class roles::leecher (
 
   include '::git'
   include '::nginx'
+  class { 'profiles::atrpms':
+    atrpms_include => 'unrar',
+    atrpms_exclude => '*',
+  }
 
   package { 'rtorrent':
     ensure => installed,
@@ -15,6 +19,7 @@ class roles::leecher (
   vcsrepo { '/opt/rutorrent':
     ensure   => present,
     provider => 'git',
+    user     => 'james',
     source   => 'https://github.com/Novik/ruTorrent',
   } ->
   nginx::resource::vhost { 'rutorrent':
@@ -37,6 +42,24 @@ class roles::leecher (
     fstype  => 'nfs4',
     options => 'defaults',
     atboot  => true,
+  } ->
+  file { '/mnt/nasa/rtorrent':
+    ensure => directory,
+    owner  => 'james',
+    group  => 'james',
+    mode   => '0700',
+  } ->
+  file { '/mnt/nasa/rtorrent/drop':
+    ensure => directory,
+    owner  => 'james',
+    group  => 'james',
+    mode   => '0700',
+  } ->
+  file { '/mnt/nasa/rtorrent/downloads':
+    ensure => directory,
+    owner  => 'james',
+    group  => 'james',
+    mode   => '0700',
   }
 
   file { '/mnt/nasb':
