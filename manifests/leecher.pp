@@ -3,6 +3,8 @@ class roles::leecher (
 
   include '::git'
   include '::nginx'
+  include '::sabnzbd'
+
   class { 'profiles::atrpms':
     atrpms_include => 'unrar*',
   }
