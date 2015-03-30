@@ -5,7 +5,6 @@ class roles::leecher (
   include '::nginx'
   class { 'profiles::atrpms':
     atrpms_include => 'unrar*',
-    atrpms_exclude => '*',
   }
 
   package { 'rtorrent':
