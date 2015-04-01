@@ -39,13 +39,17 @@ class roles::leecher (
     enable => true,
   }
 
-  apt::ppa { 'ppa:mc3man/trusty-media':
-  } ->
+  apt::ppa { 'ppa:mc3man/trusty-media': } ->
   package { 'ffmpeg':
     ensure => installed,
   }
 
   package { 'mediainfo':
+    ensure => installed,
+  }
+
+  apt::ppa { 'ppa:jcfp/ppa': } ->
+  package { 'sabnzbd':
     ensure => installed,
   }
 
