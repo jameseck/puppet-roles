@@ -11,12 +11,12 @@ class roles::leecher (
   }
 
 
-  apt::key { 'puppetlabs':
+  apt::key { 'nzbdrone':
     key        => 'FDA5DFFC',
     key_source => 'http://update.nzbdrone.com/publickey.gpg',
   }
 
-  apt::source { 'puppetlabs':
+  apt::source { 'nzbdrone':
     repos    => [ 'main', 'master' ],
     location => 'http://update.nzbdrone.com/repos/apt/debian',
   }
