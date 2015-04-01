@@ -21,9 +21,10 @@ class roles::leecher (
   }
 
   apt::source { 'nzbdrone':
-    release  => 'master',
-    repos    => 'main',
-    location => 'http://update.nzbdrone.com/repos/apt/debian',
+    release     => 'master',
+    repos       => 'main',
+    location    => 'http://update.nzbdrone.com/repos/apt/debian',
+    include_src => false,
   }
 
   apt::ppa { 'ppa:mc3man/trusty-media':
