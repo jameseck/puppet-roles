@@ -21,7 +21,7 @@ class roles::leecher (
   }
 
   apt::source { 'nzbdrone':
-    repos    => 'main, master',
+    repos    => 'main master',
     location => 'http://update.nzbdrone.com/repos/apt/debian',
   }
 
