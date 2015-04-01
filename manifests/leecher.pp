@@ -25,6 +25,9 @@ class roles::leecher (
     location => 'http://update.nzbdrone.com/repos/apt/debian',
   }
 
+  apt::ppa { 'ppa:mc3man/trusty-media':
+  }
+
 
 #  class { 'sabnzbd':
 #    user     => 'james',
