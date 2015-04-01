@@ -1,0 +1,11 @@
+directory = /mnt/nasa/rtorrent/downloads/incomplete
+system.method.set_key = event.download.finished,move_complete,"d.set_directory=/mnt/nasa/rtorrent/downloads/complete ;execute=mv,-u,$d.get_base_path=,/mnt/nasa/rtorrent/downloads/complete"
+session = /var/lib/rtorrent_session
+ratio.enable=
+ratio.min.set=0
+ratio.max.set=1
+ratio.upload.set=1b
+schedule = watch_directory,5,5,load_start=/mnt/nasa/rtorrent/drop/*.torrent
+scgi_port = localhost:5000
+log.open_file = rtorrent,~/rtorrent.log
+log.add_output = debug,"rtorrent"

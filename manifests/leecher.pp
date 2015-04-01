@@ -129,7 +129,28 @@ class roles::leecher (
     owner  => 'james',
     group  => 'james',
     mode   => '0700',
+  } ->
+  file { '/mnt/nasa/rtorrent/downloads/complete':
+    ensure => directory,
+    owner  => 'james',
+    group  => 'james',
+    mode   => '0700',
   }
+  file { '/mnt/nasa/rtorrent/downloads/incomplete':
+    ensure => directory,
+    owner  => 'james',
+    group  => 'james',
+    mode   => '0700',
+  }
+
+  file { '/home/james/.rtorrent-rc':
+    ensure => file,
+    owner  => 'james',
+    group  => 'james',
+    mode   => '0644',
+    source => 'puppet:///modules/roles/leecher/rtorrent-rc',
+  }
+
 
   file { '/mnt/nasb':
     ensure => directory,
