@@ -56,6 +56,7 @@ class roles::leecher (
     ensure              => present,
     location            => '~ \.php$',
     vhost               => 'rutorrent',
+    www_root            => '/opt/rutorrent',
     location_cfg_append => {
       'fastcgi_split_path_info' => '^(.+\.php)(/.+)$',
       'fastcgi_pass'            => '127.0.0.1:9000',
@@ -68,6 +69,7 @@ class roles::leecher (
     ensure              => present,
     location            => '/RPC2',
     vhost               => 'rutorrent',
+    www_root            => '/opt/rutorrent',
     location_cfg_append => {
       'include'   => 'scgi_params',
       'scgi_pass' => 'localhost:5000',
