@@ -1,0 +1,10 @@
+[Unit]
+Description=rtorrent
+
+[Service]
+ExecStart=/etc/init.d/rtorrent start
+ExecStop=/etc/init.d/rtorrent stop
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
