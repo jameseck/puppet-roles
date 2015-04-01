@@ -49,7 +49,7 @@ class roles::leecher (
   }
 
   apt::ppa { 'ppa:jcfp/ppa': } ->
-  package { 'sabnzbd':
+  package { 'sabnzbdplus':
     ensure => installed,
   }
 
