@@ -48,7 +48,9 @@ class roles::leecher (
     ensure               => present,
     server_name          => [ $::fqdn ],
     www_root             => '/opt/rutorrent',
-    listen_port          => '80',
+    ssl                  => true,
+    listen_port          => '443',
+    #listen_port          => '80',
     use_default_location => false,
     vhost_cfg_append     => {
       'try_files' => '$uri $uri/ =404',
