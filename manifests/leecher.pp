@@ -123,7 +123,7 @@ class roles::leecher (
     mode   => '0770',
   }
 
-  file { '/etc/php-fpm.d/www.conf':
+  file { '/etc/php5/fpm/pool.d/www.conf':
     ensure => file,
     owner  => 'root',
     group  => 'root',
