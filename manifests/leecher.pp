@@ -167,8 +167,12 @@ class roles::leecher (
     source => 'puppet:///modules/roles/leecher/rtorrent.initscript',
   } ->
   service { 'rtorrent':
-    ensure => running,
-    enable => true,
+    ensure  => running,
+    start   => '/etc/init.d/rtorrent start',
+    stop    => '/etc/init.d/rtorrent stop',
+    restart => '/etc/init.d/rtorrent restart',
+    status  => '/etc/init.d/rtorrent status',
+    enable  => true,
   }
 
   file { '/mnt/nasb':
