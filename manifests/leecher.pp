@@ -46,12 +46,12 @@ class roles::leecher (
       'try_files' => '$uri $uri/ =404',
     },
   }
-  nginx::resource::location { 'rutorrent_auth':
-    ensure         => present,
-    location       => '^~ /rutorrent',
-    vhost          => 'rutorrent',
-    location_alias => '/opt/rutorrent',
-  }
+#  nginx::resource::location { 'rutorrent_auth':
+#    ensure         => present,
+#    location       => '^~ /rutorrent',
+#    vhost          => 'rutorrent',
+#    location_alias => '/opt/rutorrent',
+#  }
   nginx::resource::location { 'rutorrent_php':
     ensure              => present,
     location            => '~ \.php$',
