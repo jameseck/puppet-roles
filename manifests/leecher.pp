@@ -36,11 +36,11 @@ class roles::leecher (
     ensure => installed,
   }
 
-#  $php_packages = [ 'php-xml', 'php-common', 'php', 'php-cli', 'php-fpm', 'php-process', 'php-pecl-apcu', 'php-pear', ]
+  $php_packages = [ 'php5-xml', 'php5-common', 'php5', 'php5-cli', 'php5-fpm', 'php5-process', 'php5-pecl-apcu', 'php5-pear', ]
 
-#  package { $php_packages:
-#    ensure => installed,
-#  }
+  package { $php_packages:
+    ensure => installed,
+  }
 
   package { 'unrar':
     ensure => installed,
