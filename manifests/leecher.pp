@@ -50,8 +50,6 @@ class roles::leecher (
     www_root             => '/opt/rutorrent',
     ssl                  => true,
     listen_port          => '443',
-    ssl_cert             => '/etc/nginx/leecher.je.home.cert.pem',
-    ssl_key              => '/etc/nginx/leecher.je.home.key.pem',
     #listen_port          => '80',
     use_default_location => false,
     vhost_cfg_append     => {
