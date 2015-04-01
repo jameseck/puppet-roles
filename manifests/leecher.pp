@@ -4,6 +4,7 @@ class roles::leecher (
   include '::git'
   include '::nginx'
   include '::profiles::nux_desktop'
+  include '::profiles::sonar_repo'
 
   class { 'sabnzbd':
     user     => 'james',
@@ -13,6 +14,10 @@ class roles::leecher (
 
   class { 'profiles::atrpms':
     atrpms_include => 'unrar*',
+  }
+
+  package { 'sonar':
+    ensure => installed,
   }
 
   package { 'rtorrent':
