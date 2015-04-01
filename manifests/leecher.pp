@@ -31,7 +31,7 @@ class roles::leecher (
     ensure => file,
     owner  => 'root',
     group  => 'root',
-    mode   => '0644',
+    mode   => '0755',
     source => 'puppet:///modules/roles/leecher/_etc_init_nzbdrone.conf',
   } ->
   service { 'nzbdrone':
