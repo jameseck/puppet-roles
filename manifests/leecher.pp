@@ -36,7 +36,14 @@ class roles::leecher (
     ensure => installed,
   }
 
-  $php_packages = [ 'php5-xml', 'php5-common', 'php5', 'php5-cli', 'php5-fpm', 'php5-process', 'php5-pecl-apcu', 'php5-pear', ]
+  $php_packages = [
+    'php5',
+    'php5-fpm',
+    'php5-common',
+    'php5-cli',
+    'php5-apcu',
+    'php-pear',
+  ]
 
   package { $php_packages:
     ensure => installed,
@@ -109,7 +116,7 @@ class roles::leecher (
     }
   }
 
-  file { '/var/lib/php/session':
+  file { '/var/lib/php5/session':
     ensure => directory,
     owner  => 'nginx',
     group  => 'root',
