@@ -14,22 +14,29 @@ class roles::leecher (
     ensure => installed,
   }
 
-
   apt::key { 'nzbdrone':
     key        => 'D9B78493',
     key_source => 'http://update.nzbdrone.com/publickey.gpg',
-  }
-
+  } ->
   apt::source { 'nzbdrone':
     release     => 'master',
     repos       => 'main',
     location    => 'http://update.nzbdrone.com/repos/apt/debian',
     include_src => false,
+  } ->
+  package { 'nzbdrone':
+    ensure => installed,
   }
 
   apt::ppa { 'ppa:mc3man/trusty-media':
+  } ->
+  package { 'ffmpeg':
+    ensure => installed,
   }
 
+  package { 'mediainfo':
+    ensure => installed,
+  }
 
 #  class { 'sabnzbd':
 #    user     => 'james',
@@ -55,14 +62,6 @@ class roles::leecher (
   }
 
   package { 'unrar':
-    ensure => installed,
-  }
-
-  package { 'ffmpeg':
-    ensure => installed,
-  }
-
-  package { 'mediainfo':
     ensure => installed,
   }
 
