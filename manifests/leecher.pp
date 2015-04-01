@@ -51,6 +51,17 @@ class roles::leecher (
   apt::ppa { 'ppa:jcfp/ppa': } ->
   package { 'sabnzbdplus':
     ensure => installed,
+  } ->
+  file { '/etc/default/sabnzbdplus':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/roles/leecher/_etc_default_sabnzbdplus',
+  } ->
+  service { 'sabnzbdplus':
+    ensure => running,
+    enable => true,
   }
 
 #  class { 'sabnzbd':
