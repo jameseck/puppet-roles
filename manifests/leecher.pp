@@ -6,6 +6,10 @@ class roles::leecher (
   include '::git'
   include '::nginx'
 
+  package { 'nfs-common':
+    ensure => installed,
+  }
+
   package { 'mono-complete':
     ensure => installed,
   }
