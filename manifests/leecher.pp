@@ -6,7 +6,7 @@ class roles::leecher (
   include '::git'
   include '::nginx'
 
-  pacakge { 'mono-complete':
+  package { 'mono-complete':
     ensure => installed,
   }
 
