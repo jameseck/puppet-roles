@@ -16,7 +16,7 @@ class roles::leecher (
 
 
   apt::key { 'nzbdrone':
-    key        => 'FDA5DFFC',
+    key        => 'D9B78493',
     key_source => 'http://update.nzbdrone.com/publickey.gpg',
   }
 
