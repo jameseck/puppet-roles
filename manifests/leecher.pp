@@ -159,13 +159,6 @@ class roles::leecher (
     source => 'puppet:///modules/roles/leecher/rtorrent-rc',
   }
 
-  file { '/etc/init.d/rtorrent':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/roles/leecher/rtorrent.initscript',
-  } ->
   file { '/etc/systemd/system/rtorrent.service':
     ensure => file,
     owner  => 'root',
