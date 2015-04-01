@@ -10,6 +10,7 @@
 # Should-Stop: $network
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
+# PIDFile: /var/lib/rtorrent_session/rtorrent.lock
 # Short-Description: rTorrent client
 # Description: Starts the rTorrent BitTorrent client
 ### END INIT INFO
