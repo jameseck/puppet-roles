@@ -17,7 +17,8 @@ class roles::leecher (
   }
 
   package { 'sonar':
-    ensure => installed,
+    ensure          => installed,
+    install_options => '--nogpgcheck',
   }
 
   package { 'rtorrent':
