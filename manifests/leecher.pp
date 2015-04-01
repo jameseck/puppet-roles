@@ -6,6 +6,22 @@ class roles::leecher (
   include '::git'
   include '::nginx'
 
+  pacakge { 'mono-complete':
+    ensure => installed,
+  }
+
+
+  apt::key { 'puppetlabs':
+    key        => 'FDA5DFFC',
+    key_source => 'http://update.nzbdrone.com/publickey.gpg',
+  }
+
+  apt::source { 'puppetlabs':
+    repos    => [ 'main', 'master' ],
+    location => 'http://update.nzbdrone.com/repos/apt/debian',
+  }
+
+
 #  class { 'sabnzbd':
 #    user     => 'james',
 #    group    => 'james',
