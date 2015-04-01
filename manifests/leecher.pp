@@ -33,6 +33,10 @@ class roles::leecher (
     group  => 'root',
     mode   => '0644',
     source => 'puppet:///modules/roles/leecher/_etc_init_nzbdrone.conf',
+  } ->
+  service { 'nzbdrone':
+    ensure => running,
+    enable => true,
   }
 
   apt::ppa { 'ppa:mc3man/trusty-media':
