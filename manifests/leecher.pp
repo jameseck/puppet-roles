@@ -26,6 +26,13 @@ class roles::leecher (
   } ->
   package { 'nzbdrone':
     ensure => installed,
+  } ->
+  file { '/etc/init/nzbdrone.conf':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/roles/leecher/_etc_init_nzbdrone.conf',
   }
 
   apt::ppa { 'ppa:mc3man/trusty-media':
