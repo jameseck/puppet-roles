@@ -29,6 +29,14 @@ class roles::leecher (
     ensure => installed,
   }
 
+  package { 'ffmpeg':
+    ensure => installed,
+  }
+
+  package { 'mediainfo':
+    ensure => installed,
+  }
+
   vcsrepo { '/opt/rutorrent':
     ensure   => present,
     provider => 'git',
