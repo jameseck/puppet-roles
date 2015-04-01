@@ -1,10 +1,14 @@
 [Unit]
-Description=rtorrent
+Description=rTorrent
+After=network.target
 
 [Service]
-ExecStart=/etc/init.d/rtorrent start
-ExecStop=/etc/init.d/rtorrent stop
 Type=forking
+KillMode=none
+User=james
+ExecStart=/usr/bin/screen -d -m -S rtorrent /usr/bin/rtorrent
+ExecStop=/usr/bin/killall -w -s 2 /usr/bin/rtorrent
+WorkingDirectory=/home/james/
 
 [Install]
 WantedBy=multi-user.target
