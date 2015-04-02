@@ -116,7 +116,7 @@ class roles::leecher (
 
   nginx::resource::location { 'rutorrent':
     ensure              => present,
-    location            => '/',
+    location            => '~ \.php$',
     vhost               => 'leecher',
     ssl                 => true,
     ssl_only            => true,
