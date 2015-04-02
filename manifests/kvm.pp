@@ -4,7 +4,7 @@ class roles::kvm (
   include '::nfs::server'
 
   nfs::server::export { '/home/nasa_data':
-    clients => '192.168.1.0/24',
+    clients => [ '192.168.1.0/24' ],
     options => 'rw,no_root_squash',
   }
 
