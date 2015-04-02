@@ -96,40 +96,66 @@ class roles::leecher (
     source   => 'https://github.com/Novik/ruTorrent',
   }
 
-  nginx::resource::vhost { 'sabnzbd':
+  # reverse proxy to localhost:8989 for nzbdrone
+
+
+  nginx::resource::vhost { 'leecher':
     ensure               => present,
     server_name          => [ $::fqdn ],
-    listen_port          => '444',
+    listen_port          => '445',
     ssl                  => true,
-    ssl_port             => '444',
+    ssl_port             => '445',
     ssl_cert             => '/etc/nginx/rutorrent.crt',
     ssl_key              => '/etc/nginx/rutorrent.key',
-    use_default_location => false,
-  }
-
-  nginx::resource::location { '/':
-    ensure   => present,
-    location => '/',
-    vhost    => 'sabnzbd',
-    proxy    => 'http://127.0.0.1:9090',
-    ssl      => true,
-    ssl_only => true,
-  }
-
-  nginx::resource::vhost { 'rutorrent':
-    ensure               => present,
-    server_name          => [ $::fqdn ],
-    www_root             => '/opt/rutorrent',
-    ssl                  => true,
-    listen_port          => '443',
-    ssl_cert             => '/etc/nginx/rutorrent.crt',
-    ssl_key              => '/etc/nginx/rutorrent.key',
-    #listen_port          => '80',
     use_default_location => false,
     vhost_cfg_append     => {
       'try_files' => '$uri $uri/ =404',
     },
   }
+
+  nginx::resource::location { '/sabnzbd':
+    ensure           => present,
+    location         => '/',
+    vhost            => 'leecher',
+    proxy_pass       => 'http://127.0.0.1:9090',
+    proxy_set_header => [
+      'Host $host',
+      'X-Real-IP $remote_addr',
+      'X-Forwarded-For $proxy_add_x_forwarded_for',
+    ],
+    ssl              => true,
+    ssl_only         => true,
+  }
+
+  nginx::resource::location { '/nzbdrone':
+    ensure           => present,
+    location         => '/nzbdrone',
+    vhost            => 'leecher',
+    proxy_pass       => 'http://127.0.0.1:8989',
+    proxy_set_header => [
+      'Host $host',
+      'X-Real-IP $remote_addr',
+      'X-Forwarded-For $proxy_add_x_forwarded_for',
+    ],
+    ssl              => true,
+    ssl_only         => true,
+  }
+
+
+#  nginx::resource::vhost { 'rutorrent':
+#    ensure               => present,
+#    server_name          => [ $::fqdn ],
+#    www_root             => '/opt/rutorrent',
+#    listen_port          => '444',
+#    ssl                  => true,
+#    ssl_port             => '444',
+#    ssl_cert             => '/etc/nginx/rutorrent.crt',
+#    ssl_key              => '/etc/nginx/rutorrent.key',
+#    use_default_location => false,
+#    vhost_cfg_append     => {
+#      'try_files' => '$uri $uri/ =404',
+#    },
+#  }
 #  nginx::resource::location { 'rutorrent_auth':
 #    ensure         => present,
 #    location       => '^~ /rutorrent',
@@ -139,7 +165,7 @@ class roles::leecher (
   nginx::resource::location { 'rutorrent_php':
     ensure              => present,
     location            => '~ \.php$',
-    vhost               => 'rutorrent',
+    vhost               => 'leecher',
     ssl                 => true,
     ssl_only            => true,
     www_root            => '/opt/rutorrent',
@@ -154,7 +180,7 @@ class roles::leecher (
   nginx::resource::location { 'rutorrent_RPC2':
     ensure              => present,
     location            => '/RPC2',
-    vhost               => 'rutorrent',
+    vhost               => 'leecher',
     ssl                 => true,
     ssl_only            => true,
     www_root            => '/opt/rutorrent',
