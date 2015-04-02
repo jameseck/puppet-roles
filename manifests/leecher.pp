@@ -98,6 +98,25 @@ class roles::leecher (
 
   # reverse proxy to localhost:8989 for nzbdrone
 
+  $proxy_hash = {
+    'client_max_body_size'    => '10m',
+    'client_body_buffer_size' => '128k',
+    'proxy_next_upstream'     => 'error timeout invalid_header http_500 http_502 http_503',
+    'send_timeout'            => '5m',
+    'proxy_read_timeout'      => '240',
+    'proxy_send_timeout'      => '240',
+    'proxy_connect_timeout'   => '240',
+    'proxy_set_header'        => 'Host $host',
+    'proxy_set_header'        => 'X-Real-IP $remote_addr',
+    'proxy_set_header'        => 'X-Forwarded-For $proxy_add_x_forwarded_for',
+    'proxy_set_header'        => 'X-Forwarded-Proto https',
+    'proxy_redirect'          => 'off',
+    'proxy_http_version'      => '1.1',
+    'proxy_set_header'        => 'Connection ""',
+    'proxy_cache_bypass'      => '$cookie_session',
+    'proxy_no_cache'          => '$cookie_session',
+    'proxy_buffers'           => '32 4k',
+  }
 
   nginx::resource::vhost { 'leecher':
     ensure               => present,
@@ -115,31 +134,33 @@ class roles::leecher (
   }
 
   nginx::resource::location { '/sabnzbd':
-    ensure           => present,
-    location         => '/sabnzbd',
-    vhost            => 'leecher',
-    proxy            => 'http://127.0.0.1:9090',
-    proxy_set_header => [
+    ensure              => present,
+    location            => '/sabnzbd',
+    vhost               => 'leecher',
+    proxy               => 'http://127.0.0.1:9090',
+    proxy_set_header    => [
       'Host $host',
       'X-Real-IP $remote_addr',
       'X-Forwarded-For $proxy_add_x_forwarded_for',
     ],
-    ssl              => true,
-    ssl_only         => true,
+    location_cfg_append => $proxy_hash,
+    ssl                 => true,
+    ssl_only            => true,
   }
 
   nginx::resource::location { '/nzbdrone':
-    ensure           => present,
-    location         => '/nzbdrone',
-    vhost            => 'leecher',
-    proxy            => 'http://127.0.0.1:8989',
-    proxy_set_header => [
+    ensure              => present,
+    location            => '/nzbdrone',
+    vhost               => 'leecher',
+    proxy               => 'http://127.0.0.1:8989',
+    proxy_set_header    => [
       'Host $host',
       'X-Real-IP $remote_addr',
       'X-Forwarded-For $proxy_add_x_forwarded_for',
     ],
-    ssl              => true,
-    ssl_only         => true,
+    location_cfg_append => $proxy_hash,
+    ssl                 => true,
+    ssl_only            => true,
   }
 
 
@@ -163,26 +184,6 @@ class roles::leecher (
 #    vhost          => 'rutorrent',
 #    location_alias => '/opt/rutorrent',
 #  }
-
-  $proxy_hash = {
-    'client_max_body_size'    => '10m',
-    'client_body_buffer_size' => '128k',
-    'proxy_next_upstream'     => 'error timeout invalid_header http_500 http_502 http_503',
-    'send_timeout'            => '5m',
-    'proxy_read_timeout'      => '240',
-    'proxy_send_timeout'      => '240',
-    'proxy_connect_timeout'   => '240',
-    'proxy_set_header'        => 'Host $host',
-    'proxy_set_header'        => 'X-Real-IP $remote_addr',
-    'proxy_set_header'        => 'X-Forwarded-For $proxy_add_x_forwarded_for',
-    'proxy_set_header'        => 'X-Forwarded-Proto https',
-    'proxy_redirect'          => 'off',
-    'proxy_http_version'      => '1.1',
-    'proxy_set_header'        => 'Connection ""',
-    'proxy_cache_bypass'      => '$cookie_session',
-    'proxy_no_cache'          => '$cookie_session',
-    'proxy_buffers'           => '32 4k',
-  }
 
   $rutorrent_cfg = {
     'fastcgi_split_path_info' => '^(.+\.php)(/.+)$',
@@ -218,6 +219,10 @@ class roles::leecher (
 #      'include'                 => 'fastcgi_params',
 #    }
 #  }
+  $rutorrent_rpc2_cfg = {
+    'include'   => 'scgi_params',
+    'scgi_pass' => 'localhost:5000',
+  }
   nginx::resource::location { 'rutorrent_RPC2':
     ensure              => present,
     location            => '/rutorrent/RPC2',
@@ -225,10 +230,7 @@ class roles::leecher (
     ssl                 => true,
     ssl_only            => true,
     www_root            => '/opt/rutorrent',
-    location_cfg_append => {
-      'include'   => 'scgi_params',
-      'scgi_pass' => 'localhost:5000',
-    }
+    location_cfg_append => merge($proxy_hash, $rutorrent_rpc2_cfg),
   }
 
   file { '/var/lib/php5/session':
