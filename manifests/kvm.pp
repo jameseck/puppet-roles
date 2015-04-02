@@ -12,7 +12,7 @@ class roles::kvm (
     workgroup                => 'JEHOME',
     server_string            => 'nasa.je.home',
     netbios_name             => 'nasa',
-    interfaces               => [ 'lo', 'eth0' ],
+    interfaces               => [ 'lo', 'br0' ],
     hosts_allow              => [ '127.', '192.168.1.' ],
     local_master             => 'yes',
     map_to_guest             => 'Bad User',
