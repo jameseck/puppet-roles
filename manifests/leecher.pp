@@ -220,7 +220,7 @@ class roles::leecher (
     mode   => '0700',
   }
 
-  file { '/home/james/.rtorrent-rc':
+  file { '/home/james/.rtorrent.rc':
     ensure => file,
     owner  => 'james',
     group  => 'james',
