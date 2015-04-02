@@ -226,8 +226,13 @@ class roles::leecher (
     group  => 'james',
     mode   => '0644',
     source => 'puppet:///modules/roles/leecher/rtorrent-rc',
-  }
-
+  } ->
+  file { '/var/lib/rtorrent_sessions':
+    ensure => directory,
+    owner  => 'james',
+    group  => 'james',
+    mode   => '0700',
+  } ->
   file { '/etc/init/rtorrent.conf':
     ensure => file,
     owner  => 'root',
