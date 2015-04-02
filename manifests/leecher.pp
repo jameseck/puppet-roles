@@ -107,7 +107,7 @@ class roles::leecher (
     ssl_port             => '443',
     ssl_cert             => '/etc/nginx/rutorrent.crt',
     ssl_key              => '/etc/nginx/rutorrent.key',
-    www_root             => '/opt/leecher',
+    www_root             => '/opt/rutorrent',
     use_default_location => false,
     vhost_cfg_append     => {
       'try_files' => '$uri $uri/ =404',
