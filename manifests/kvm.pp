@@ -52,7 +52,7 @@ class roles::kvm (
     refreshonly => true,
   }
 
-  sebool { 'samba_share_nfs':
+  selboolean { 'samba_share_nfs':
     value => '1',
   }
 
