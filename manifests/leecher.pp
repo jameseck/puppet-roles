@@ -102,9 +102,9 @@ class roles::leecher (
   nginx::resource::vhost { 'leecher':
     ensure               => present,
     server_name          => [ $::fqdn ],
-    listen_port          => '445',
+    listen_port          => '443',
     ssl                  => true,
-    ssl_port             => '445',
+    ssl_port             => '443',
     ssl_cert             => '/etc/nginx/rutorrent.crt',
     ssl_key              => '/etc/nginx/rutorrent.key',
     use_default_location => false,
@@ -113,9 +113,18 @@ class roles::leecher (
     },
   }
 
+  nginx::resource::location { '/':
+    ensure   => present,
+    location => '/',
+    vhost    => 'leecher',
+    www_root => '/opt/leecher',
+    ssl      => true,
+    ssl_only => true,
+  }
+
   nginx::resource::location { '/sabnzbd':
     ensure           => present,
-    location         => '/',
+    location         => '/sabnzbd',
     vhost            => 'leecher',
     proxy            => 'http://127.0.0.1:9090',
     proxy_set_header => [
