@@ -97,6 +97,7 @@ class roles::leecher (
     server_name          => [ $::fqdn ],
     listen_port          => '444',
     ssl                  => true,
+    ssl_port             => '444',
     ssl_cert             => '/etc/nginx/rutorrent.crt',
     ssl_key              => '/etc/nginx/rutorrent.key',
     use_default_location => false,
