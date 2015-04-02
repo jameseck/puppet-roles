@@ -53,7 +53,7 @@ class roles::kvm (
   }
 
   selboolean { 'samba_share_nfs':
-    value => '1',
+    value => 'on',
   }
 
   file { '/home/nasa_data':
