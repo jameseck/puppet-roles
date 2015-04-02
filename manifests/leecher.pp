@@ -108,6 +108,8 @@ class roles::leecher (
     location => '/',
     vhost    => 'sabnzbd',
     proxy    => 'http://127.0.0.1:9090',
+    ssl      => true,
+    ssl_only => true,
   }
 
   nginx::resource::vhost { 'rutorrent':
