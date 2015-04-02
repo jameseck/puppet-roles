@@ -92,7 +92,7 @@ class roles::leecher (
     source   => 'https://github.com/Novik/ruTorrent',
   }
 
-  nginx::resource::vhost { 'sabnzb':
+  nginx::resource::vhost { 'sabnzbd':
     ensure               => present,
     server_name          => [ $::fqdn ],
     listen_port          => '444',
