@@ -229,7 +229,7 @@ class roles::leecher (
   } ->
   mount { '/mnt/nasa':
     ensure  => 'mounted',
-    device  => 'nasa.je.home:/data',
+    device  => 'kvm.je.home:/home/nasa_data',
     fstype  => 'nfs4',
     options => 'defaults',
     atboot  => true,
