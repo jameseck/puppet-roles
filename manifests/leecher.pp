@@ -177,7 +177,8 @@ class roles::leecher (
       'fastcgi_param'           => 'SCRIPT_FILENAME $document_root$fastcgi_script_name',
       'fastcgi_index'           => 'index.php',
       'include'                 => 'fastcgi_params',
-    }
+      'try_files'               => '$uri $uri/ =404',
+    },
   }
 
 #  nginx::resource::location { 'rutorrent_php':
