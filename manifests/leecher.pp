@@ -145,11 +145,13 @@ class roles::leecher (
   }
 
   nginx::resource::location { 'rutorrent_cache':
-    ensure     => present,
-    vhost      => 'leecher',
-    location   => '~* \.(?:jpg|jpeg|gif|bmp|ico|png|css|js|swf)$',
-    expires    => '30d',
-    access_log => 'off',
+    ensure              => present,
+    vhost               => 'leecher',
+    location            => '~* \.(?:jpg|jpeg|gif|bmp|ico|png|css|js|swf)$',
+    access_log          => 'off',
+    location_cfg_append => {
+      'expires' => '30d',
+    },
   }
 
   file { '/var/lib/php5/session':
