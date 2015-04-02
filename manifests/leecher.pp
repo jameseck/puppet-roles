@@ -230,8 +230,8 @@ class roles::leecher (
   file { '/var/lib/rtorrent_session':
     ensure => directory,
     owner  => 'james',
-    group  => 'james',
-    mode   => '0700',
+    group  => 'nginx',
+    mode   => '0770',
   } ->
   file { '/etc/init/rtorrent.conf':
     ensure => file,
