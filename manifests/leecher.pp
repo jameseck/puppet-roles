@@ -64,12 +64,6 @@ class roles::leecher (
     enable => true,
   }
 
-#  class { 'sabnzbd':
-#    user     => 'james',
-#    group    => 'james',
-#    home_dir => '/home/james/.sabnzbd',
-#  }
-
   package { 'rtorrent':
     ensure => installed,
   }
@@ -96,6 +90,23 @@ class roles::leecher (
     provider => 'git',
     user     => 'james',
     source   => 'https://github.com/Novik/ruTorrent',
+  }
+
+  nginx::resource::vhost { 'sabnzb':
+    ensure               => present,
+    server_name          => [ $::fqdn ],
+    listen_port          => '444',
+    ssl                  => true,
+    ssl_cert             => '/etc/nginx/rutorrent.crt',
+    ssl_key              => '/etc/nginx/rutorrent.key',
+    use_default_location => false,
+  }
+
+  nginx::resource::location { '/':
+    ensure   => present,
+    location => '/',
+    vhost    => 'sabnzbd',
+    proxy    => 'http://127.0.0.1:9090',
   }
 
   nginx::resource::vhost { 'rutorrent':
