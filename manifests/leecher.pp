@@ -117,7 +117,7 @@ class roles::leecher (
     ensure           => present,
     location         => '/',
     vhost            => 'leecher',
-    proxy_pass       => 'http://127.0.0.1:9090',
+    proxy            => 'http://127.0.0.1:9090',
     proxy_set_header => [
       'Host $host',
       'X-Real-IP $remote_addr',
@@ -131,7 +131,7 @@ class roles::leecher (
     ensure           => present,
     location         => '/nzbdrone',
     vhost            => 'leecher',
-    proxy_pass       => 'http://127.0.0.1:8989',
+    proxy            => 'http://127.0.0.1:8989',
     proxy_set_header => [
       'Host $host',
       'X-Real-IP $remote_addr',
