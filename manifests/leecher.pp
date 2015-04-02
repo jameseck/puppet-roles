@@ -148,9 +148,9 @@ class roles::leecher (
     ensure              => present,
     vhost               => 'leecher',
     location            => '~* \.(?:jpg|jpeg|gif|bmp|ico|png|css|js|swf)$',
-    access_log          => 'off',
     location_cfg_append => {
-      'expires' => '30d',
+      'expires'    => '30d',
+      'access_log' => 'off',
     },
   }
 
