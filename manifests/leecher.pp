@@ -114,33 +114,33 @@ class roles::leecher (
     },
   }
 
-  nginx::resource::location { '/sabnzbd':
-    ensure           => present,
-    location         => '/sabnzbd',
-    vhost            => 'leecher',
-    proxy            => 'http://127.0.0.1:9090',
-    proxy_set_header => [
-      'Host $host',
-      'X-Real-IP $remote_addr',
-      'X-Forwarded-For $proxy_add_x_forwarded_for',
-    ],
-    ssl              => true,
-    ssl_only         => true,
-  }
+#  nginx::resource::location { '/sabnzbd':
+#    ensure           => present,
+#    location         => '/sabnzbd',
+#    vhost            => 'leecher',
+#    proxy            => 'http://127.0.0.1:9090',
+#    proxy_set_header => [
+#      'Host $host',
+#      'X-Real-IP $remote_addr',
+#      'X-Forwarded-For $proxy_add_x_forwarded_for',
+#    ],
+#    ssl              => true,
+#    ssl_only         => true,
+#  }
 
-  nginx::resource::location { '/nzbdrone':
-    ensure           => present,
-    location         => '/nzbdrone',
-    vhost            => 'leecher',
-    proxy            => 'http://127.0.0.1:8989',
-    proxy_set_header => [
-      'Host $host',
-      'X-Real-IP $remote_addr',
-      'X-Forwarded-For $proxy_add_x_forwarded_for',
-    ],
-    ssl              => true,
-    ssl_only         => true,
-  }
+#  nginx::resource::location { '/nzbdrone':
+#    ensure           => present,
+#    location         => '/nzbdrone',
+#    vhost            => 'leecher',
+#    proxy            => 'http://127.0.0.1:8989',
+#    proxy_set_header => [
+#      'Host $host',
+#      'X-Real-IP $remote_addr',
+#      'X-Forwarded-For $proxy_add_x_forwarded_for',
+#    ],
+#    ssl              => true,
+#    ssl_only         => true,
+#  }
 
 
 #  nginx::resource::vhost { 'rutorrent':
@@ -166,7 +166,7 @@ class roles::leecher (
 
   nginx::resource::location { 'rutorrent':
     ensure              => present,
-    location            => '/rutorrent',
+    location            => '/',
     vhost               => 'leecher',
     ssl                 => true,
     ssl_only            => true,
@@ -198,7 +198,7 @@ class roles::leecher (
 #  }
   nginx::resource::location { 'rutorrent_RPC2':
     ensure              => present,
-    location            => '/rutorrent/RPC2',
+    location            => '/RPC2',
     vhost               => 'leecher',
     ssl                 => true,
     ssl_only            => true,
