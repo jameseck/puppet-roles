@@ -17,8 +17,8 @@ USER=james
 CONFIG=
 
 # [optional] hostname/ip and port number to listen on:
-HOST=0.0.0.0
-PORT=9090
+HOST=
+PORT=
 
 # [optional] extra command line options, if any:
 EXTRAOPTS=

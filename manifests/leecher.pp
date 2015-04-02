@@ -114,56 +114,6 @@ class roles::leecher (
     },
   }
 
-#  nginx::resource::location { '/sabnzbd':
-#    ensure           => present,
-#    location         => '/sabnzbd',
-#    vhost            => 'leecher',
-#    proxy            => 'http://127.0.0.1:9090',
-#    proxy_set_header => [
-#      'Host $host',
-#      'X-Real-IP $remote_addr',
-#      'X-Forwarded-For $proxy_add_x_forwarded_for',
-#    ],
-#    ssl              => true,
-#    ssl_only         => true,
-#  }
-
-#  nginx::resource::location { '/nzbdrone':
-#    ensure           => present,
-#    location         => '/nzbdrone',
-#    vhost            => 'leecher',
-#    proxy            => 'http://127.0.0.1:8989',
-#    proxy_set_header => [
-#      'Host $host',
-#      'X-Real-IP $remote_addr',
-#      'X-Forwarded-For $proxy_add_x_forwarded_for',
-#    ],
-#    ssl              => true,
-#    ssl_only         => true,
-#  }
-
-
-#  nginx::resource::vhost { 'rutorrent':
-#    ensure               => present,
-#    server_name          => [ $::fqdn ],
-#    www_root             => '/opt/rutorrent',
-#    listen_port          => '444',
-#    ssl                  => true,
-#    ssl_port             => '444',
-#    ssl_cert             => '/etc/nginx/rutorrent.crt',
-#    ssl_key              => '/etc/nginx/rutorrent.key',
-#    use_default_location => false,
-#    vhost_cfg_append     => {
-#      'try_files' => '$uri $uri/ =404',
-#    },
-#  }
-#  nginx::resource::location { 'rutorrent_auth':
-#    ensure         => present,
-#    location       => '^~ /rutorrent',
-#    vhost          => 'rutorrent',
-#    location_alias => '/opt/rutorrent',
-#  }
-
   nginx::resource::location { 'rutorrent':
     ensure              => present,
     location            => '/',
@@ -181,21 +131,6 @@ class roles::leecher (
     },
   }
 
-#  nginx::resource::location { 'rutorrent_php':
-#    ensure              => present,
-#    location            => '~ rutorrent/\.php$',
-#    vhost               => 'leecher',
-#    ssl                 => true,
-#    ssl_only            => true,
-#    www_root            => '/opt/rutorrent',
-#    location_cfg_append => {
-#      'fastcgi_split_path_info' => '^(.+\.php)(/.+)$',
-#      'fastcgi_pass'            => '127.0.0.1:9000',
-#      'fastcgi_param'           => 'SCRIPT_FILENAME $document_root$fastcgi_script_name',
-#      'fastcgi_index'           => 'index.php',
-#      'include'                 => 'fastcgi_params',
-#    }
-#  }
   nginx::resource::location { 'rutorrent_RPC2':
     ensure              => present,
     location            => '/RPC2',
@@ -207,6 +142,14 @@ class roles::leecher (
       'include'   => 'scgi_params',
       'scgi_pass' => 'localhost:5000',
     }
+  }
+
+  nginx::resource::location { 'rutorrent_cache':
+    ensure     => present,
+    vhost      => 'leecher',
+    location   => '~* \.(?:jpg|jpeg|gif|bmp|ico|png|css|js|swf)$',
+    expires    => '30d',
+    access_log => 'off',
   }
 
   file { '/var/lib/php5/session':
