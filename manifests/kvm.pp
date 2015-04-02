@@ -55,6 +55,9 @@ class roles::kvm (
   selboolean { 'samba_share_nfs':
     value => 'on',
   }
+  selboolean { 'allow_smbd_anon_write':
+    value => 'on',
+  }
 
   file { '/home/nasa_data':
     ensure => directory,
