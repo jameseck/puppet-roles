@@ -1,0 +1,4 @@
+/home 192.168.1.0/24(rw,no_root_squash,fsid=0)
+/home/nasa_data 192.168.1.0/24(rw,no_root_squash,fsid=1)
+/home/backup 192.168.1.0/24(rw,no_root_squash,fsid=2)
+
