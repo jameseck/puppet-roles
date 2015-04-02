@@ -6,6 +6,10 @@ class roles::leecher (
   include '::git'
   include '::nginx'
 
+  package { 'dtach':
+    ensure => installed,
+  }
+
   package { 'nfs-common':
     ensure => installed,
   }
@@ -224,12 +228,12 @@ class roles::leecher (
     source => 'puppet:///modules/roles/leecher/rtorrent-rc',
   }
 
-  file { '/etc/init.d/rtorrent':
+  file { '/etc/init/rtorrent.conf':
     ensure => file,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
-    source => 'puppet:///modules/roles/leecher/_etc_init.d_rtorrent',
+    source => 'puppet:///modules/roles/leecher/_etc_init_rtorrent.conf',
   } ->
   service { 'rtorrent':
     ensure => running,
