@@ -7,6 +7,10 @@ class roles::kvm (
     clients => [ '192.168.1.0/24' ],
     options => 'rw,no_root_squash',
   }
+  nfs::server::export { '/home/nasb_data':
+    clients => [ '192.168.1.0/24' ],
+    options => 'rw,no_root_squash',
+  }
   nfs::server::export { '/home/nasa_backup':
     clients => [ '192.168.1.0/24' ],
     options => 'rw,no_root_squash',
@@ -44,6 +48,15 @@ class roles::kvm (
         'available = yes',
         'valid users = james',
       ],
+      'nasb'   => [
+        'comment = nasb_data',
+        'path = /home/nasb_data',
+        'browseable = yes',
+        'writable = yes',
+        'guest ok = no',
+        'available = yes',
+        'valid users = james',
+      ],
       'backup' => [
         'comment = nasa_backup',
         'path = /home/nasa_backup',
@@ -64,6 +77,16 @@ class roles::kvm (
 
   exec { 'restorecon nasa_data':
     command     => 'restorecon -R /home/nasa_data',
+    refreshonly => true,
+  }
+  selinux_fcontext { '/home/nasb_data(/.*)':
+    ensure  => 'present',
+    seltype => 'public_content_rw_t',
+    notify  => Exec['restorecon nasb_data'],
+  }
+
+  exec { 'restorecon nasb_data':
+    command     => 'restorecon -R /home/nasb_data',
     refreshonly => true,
   }
   selinux_fcontext { '/home/nasa_backup(/.*)':
@@ -90,6 +113,15 @@ class roles::kvm (
   mount { '/home/nasa_data':
     ensure  => 'mounted',
     device  => '/dev/mapper/vg_data-lv_data',
+    fstype  => 'ext4',
+    options => 'defaults',
+  }
+  file { '/home/nasb_data':
+    ensure => directory,
+  } ->
+  mount { '/home/nasb_data':
+    ensure  => 'mounted',
+    device  => '/dev/mapper/vg_nasb-lv_data',
     fstype  => 'ext4',
     options => 'defaults',
   }
