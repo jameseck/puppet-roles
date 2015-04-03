@@ -75,10 +75,12 @@ class roles::kvm (
 
 
   selboolean { 'samba_share_nfs':
-    value => 'on',
+    persistent => true,
+    value      => 'on',
   }
   selboolean { 'allow_smbd_anon_write':
-    value => 'on',
+    persistent => true,
+    value      => 'on',
   }
 
   file { '/export':
