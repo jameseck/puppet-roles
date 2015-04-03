@@ -108,7 +108,8 @@ class roles::kvm (
   }
 
   file { '/home/nasa_data':
-    ensure => directory,
+    ensure  => directory,
+    seltype => 'public_content_rw_t',
   } ->
   mount { '/home/nasa_data':
     ensure  => 'mounted',
@@ -117,7 +118,8 @@ class roles::kvm (
     options => 'defaults',
   }
   file { '/home/nasb_data':
-    ensure => directory,
+    ensure  => directory,
+    seltype => 'public_content_rw_t',
   } ->
   mount { '/home/nasb_data':
     ensure  => 'mounted',
@@ -126,7 +128,8 @@ class roles::kvm (
     options => 'defaults',
   }
   file { '/home/nasa_backup':
-    ensure => directory,
+    ensure  => directory,
+    seltype => 'public_content_rw_t',
   } ->
   mount { '/home/nasa_backup':
     ensure  => 'mounted',
