@@ -98,7 +98,7 @@ class roles::kvm (
   } ->
   mount { '/export/nasa_data':
     ensure  => 'mounted',
-    device  => '/dev/mapper/vg_data-lv_data',
+    device  => '/dev/mapper/vg_nasadata-lv_data',
     fstype  => 'ext4',
     options => 'defaults',
   } ->
