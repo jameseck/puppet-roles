@@ -230,7 +230,7 @@ class roles::leecher (
   } ->
   mount { '/mnt/nasb':
     ensure  => 'mounted',
-    device  => 'kvm.je.home/nasb_data',
+    device  => 'kvm.je.home:/nasb_data',
     fstype  => 'nfs4',
     options => 'defaults',
     atboot  => true,
