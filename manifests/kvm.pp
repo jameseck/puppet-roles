@@ -7,6 +7,10 @@ class roles::kvm (
     clients => [ '192.168.1.0/24' ],
     options => 'rw,no_root_squash',
   }
+  nfs::server::export { '/home/nasa_backup':
+    clients => [ '192.168.1.0/24' ],
+    options => 'rw,no_root_squash',
+  }
 
   class { '::samba::server':
     workgroup                => 'JEHOME',
