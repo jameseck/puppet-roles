@@ -3,17 +3,21 @@ class roles::kvm (
 
   include '::nfs::server'
 
-  nfs::server::export { '/home/nasa_data':
-    clients => [ '192.168.1.0/24' ],
-    options => 'rw,no_root_squash',
+  nfs::server::export { '/export':
+    clients => ['192.168.1.0/24' ],
+    options => 'rw,no_root_squash,fsid=0',
   }
-  nfs::server::export { '/home/nasb_data':
+  nfs::server::export { '/export/nasa_data':
     clients => [ '192.168.1.0/24' ],
-    options => 'rw,no_root_squash',
+    options => 'rw,no_root_squash,fsid=1',
   }
-  nfs::server::export { '/home/nasa_backup':
+  nfs::server::export { '/export/nasb_data':
     clients => [ '192.168.1.0/24' ],
-    options => 'rw,no_root_squash',
+    options => 'rw,no_root_squash,fsid=2',
+  }
+  nfs::server::export { '/export/nasa_backup':
+    clients => [ '192.168.1.0/24' ],
+    options => 'rw,no_root_squash,fsid=3',
   }
 
   class { '::samba::server':
@@ -41,7 +45,7 @@ class roles::kvm (
       ],
       'data'   => [
         'comment = nasa_data',
-        'path = /home/nasa_data',
+        'path = /export/nasa_data',
         'browseable = yes',
         'writable = yes',
         'guest ok = no',
@@ -50,7 +54,7 @@ class roles::kvm (
       ],
       'nasb'   => [
         'comment = nasb_data',
-        'path = /home/nasb_data',
+        'path = /export/nasb_data',
         'browseable = yes',
         'writable = yes',
         'guest ok = no',
@@ -59,7 +63,7 @@ class roles::kvm (
       ],
       'backup' => [
         'comment = nasa_backup',
-        'path = /home/nasa_backup',
+        'path = /export/nasa_backup',
         'browseable = yes',
         'writable = yes',
         'guest ok = no',
@@ -69,36 +73,6 @@ class roles::kvm (
     },
   }
 
-  selinux_fcontext { '/home/nasa_data(/.*)':
-    ensure  => 'present',
-    seltype => 'public_content_rw_t',
-    notify  => Exec['restorecon nasa_data'],
-  }
-
-  exec { 'restorecon nasa_data':
-    command     => 'restorecon -R /home/nasa_data',
-    refreshonly => true,
-  }
-  selinux_fcontext { '/home/nasb_data(/.*)':
-    ensure  => 'present',
-    seltype => 'public_content_rw_t',
-    notify  => Exec['restorecon nasb_data'],
-  }
-
-  exec { 'restorecon nasb_data':
-    command     => 'restorecon -R /home/nasb_data',
-    refreshonly => true,
-  }
-  selinux_fcontext { '/home/nasa_backup(/.*)':
-    ensure  => 'present',
-    seltype => 'public_content_rw_t',
-    notify  => Exec['restorecon nasa_backup'],
-  }
-
-  exec { 'restorecon nasa_backup':
-    command     => 'restorecon -R /home/nasa_backup',
-    refreshonly => true,
-  }
 
   selboolean { 'samba_share_nfs':
     value => 'on',
@@ -107,36 +81,73 @@ class roles::kvm (
     value => 'on',
   }
 
-  file { '/home/nasa_data':
+  file { '/export':
     ensure  => directory,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
     seltype => 'public_content_rw_t',
+  }
+  selinux_fcontext { '/export(/.*)':
+    ensure  => 'present',
+    seltype => 'public_content_rw_t',
+  }
+
+  file { '/export/nasa_data':
+    ensure  => directory,
   } ->
-  mount { '/home/nasa_data':
+  mount { '/export/nasa_data':
     ensure  => 'mounted',
     device  => '/dev/mapper/vg_data-lv_data',
     fstype  => 'ext4',
     options => 'defaults',
-  }
-  file { '/home/nasb_data':
-    ensure  => directory,
-    seltype => 'public_content_rw_t',
   } ->
-  mount { '/home/nasb_data':
+  selinux_fcontext { '/export/nasa_data(/.*)':
+    ensure  => 'present',
+    seltype => 'public_content_rw_t',
+    notify  => Exec['restorecon nasa_data'],
+  }
+  exec { 'restorecon nasa_data':
+    command     => 'restorecon -R /export/nasa_data',
+    refreshonly => true,
+  }
+
+  file { '/export/nasb_data':
+    ensure  => directory,
+  } ->
+  mount { '/export/nasb_data':
     ensure  => 'mounted',
     device  => '/dev/mapper/vg_nasb-lv_data',
     fstype  => 'ext4',
     options => 'defaults',
-  }
-  file { '/home/nasa_backup':
-    ensure  => directory,
-    seltype => 'public_content_rw_t',
   } ->
-  mount { '/home/nasa_backup':
+  selinux_fcontext { '/export/nasb_data(/.*)':
+    ensure  => 'present',
+    seltype => 'public_content_rw_t',
+    notify  => Exec['restorecon nasb_data'],
+  }
+  exec { 'restorecon nasb_data':
+    command     => 'restorecon -R /export/nasb_data',
+    refreshonly => true,
+  }
+
+  file { '/export/nasa_backup':
+    ensure  => directory,
+  } ->
+  mount { '/export/nasa_backup':
     ensure  => 'mounted',
     device  => 'UUID="a9dbc7a2-9f6f-4f1c-b60a-c9d95f753674"',
     fstype  => 'ext4',
     options => 'defaults',
+  } ->
+  selinux_fcontext { '/export/nasa_backup(/.*)':
+    ensure  => 'present',
+    seltype => 'public_content_rw_t',
+    notify  => Exec['restorecon nasa_backup'],
   }
-
+  exec { 'restorecon nasa_backup':
+    command     => 'restorecon -R /export/nasa_backup',
+    refreshonly => true,
+  }
 
 }
