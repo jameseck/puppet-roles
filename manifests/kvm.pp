@@ -30,14 +30,23 @@ class roles::kvm (
       'smb ports = 445',
     ],
     shares                   => {
-      'homes' => [
+      'homes'  => [
         'comment = Home Directories',
         'browseable = no',
         'writable = yes',
       ],
-      'data'  => [
+      'data'   => [
         'comment = nasa_data',
         'path = /home/nasa_data',
+        'browseable = yes',
+        'writable = yes',
+        'guest ok = no',
+        'available = yes',
+        'valid users = james',
+      ],
+      'backup' => [
+        'comment = nasa_backup',
+        'path = /home/nasa_backup',
         'browseable = yes',
         'writable = yes',
         'guest ok = no',
@@ -57,6 +66,16 @@ class roles::kvm (
     command     => 'restorecon -R /home/nasa_data',
     refreshonly => true,
   }
+  selinux_fcontext { '/home/nasa_backup(/.*)':
+    ensure  => 'present',
+    seltype => 'public_content_rw_t',
+    notify  => Exec['restorecon nasa_backup'],
+  }
+
+  exec { 'restorecon nasa_backup':
+    command     => 'restorecon -R /home/nasa_backup',
+    refreshonly => true,
+  }
 
   selboolean { 'samba_share_nfs':
     value => 'on',
@@ -71,6 +90,15 @@ class roles::kvm (
   mount { '/home/nasa_data':
     ensure  => 'mounted',
     device  => '/dev/mapper/vg_data-lv_data',
+    fstype  => 'ext4',
+    options => 'defaults',
+  }
+  file { '/home/nasa_backup':
+    ensure => directory,
+  } ->
+  mount { '/home/nasa_backup':
+    ensure  => 'mounted',
+    device  => 'UUID="a9dbc7a2-9f6f-4f1c-b60a-c9d95f753674"',
     fstype  => 'ext4',
     options => 'defaults',
   }
