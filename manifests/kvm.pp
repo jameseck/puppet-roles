@@ -11,7 +11,7 @@ class roles::kvm (
   class { '::samba::server':
     workgroup                => 'JEHOME',
     server_string            => 'nasa.je.home',
-    netbios_name             => 'nasa',
+    #netbios_name             => 'nasa',
     interfaces               => [ 'lo', 'br0' ],
     hosts_allow              => [ '127.', '192.168.1.' ],
     local_master             => 'yes',
@@ -22,6 +22,8 @@ class roles::kvm (
     extra_global_options     => [
       'printing = BSD',
       'printcap name = /dev/null',
+      'disable netbios = yes',
+      'smb ports = 445',
     ],
     shares                   => {
       'homes' => [
