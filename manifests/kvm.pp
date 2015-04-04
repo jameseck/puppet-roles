@@ -3,12 +3,6 @@ class roles::kvm (
 
   include '::nfs::server'
 
-  sysctl { 'net.ipv4.ip_nonlocal_bind':
-    ensure    => 'present',
-    permanent => 'yes',
-    value     => '1',
-  }
-
   nfs::server::export { '/export':
     clients => ['192.168.1.0/24' ],
     options => 'rw,no_root_squash,fsid=0',

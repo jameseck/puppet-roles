@@ -1,6 +1,12 @@
 class roles::foreman (
 ) {
 
+  sysctl { 'net.ipv4.ip_nonlocal_bind':
+    ensure    => 'present',
+    permanent => 'yes',
+    value     => '1',
+  }
+
   sudo::conf { 'foreman-proxy-puppetcert':
     priority => 10,
     content  => 'foreman-proxy ALL = NOPASSWD: /usr/bin/puppet cert *',
