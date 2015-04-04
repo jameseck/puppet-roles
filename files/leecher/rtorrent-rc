@@ -9,3 +9,4 @@ schedule = watch_directory,5,5,load_start=/mnt/nasa/rtorrent/drop/*.torrent
 scgi_port = localhost:5000
 log.open_file = rtorrent,~/rtorrent.log
 log.add_output = debug,"rtorrent"
+port_range = 6881-6881
