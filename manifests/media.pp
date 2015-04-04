@@ -21,7 +21,7 @@ class roles::media (
   } ->
   mount { '/mnt/nasb':
     ensure  => 'mounted',
-    device  => 'nasb.je.home:/data',
+    device  => 'kvm.je.home:/nasbdata',
     fstype  => 'nfs4',
     options => 'defaults',
     atboot  => true,
