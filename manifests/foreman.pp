@@ -40,8 +40,9 @@ class roles::foreman (
     auth_pass         => 'secret',
     virtual_ipaddress => [ '192.168.1.2/24' ],
     notify_script     => '/etc/keepalived/notify-keepalived.sh',
+    track_script      => 'checkscript',
   } ->
-  keepalived::vrrp::script { 'check':
+  keepalived::vrrp::script { 'checkscript':
     script   => '/etc/keepalived/check-keepalived.sh',
     interval => 2,
     rise     => 2,
