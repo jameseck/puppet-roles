@@ -25,11 +25,11 @@ class roles::foreman (
     content => template('roles/foreman/notify-keepalived.sh.erb'),
   } ->
   file { '/etc/keepalived/check-keepalived.sh':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => 'puppet:///modules/roles/foreman/check-keepalived.sh',
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/roles/foreman/check-keepalived.sh',
   } ->
   keepalived::vrrp::instance { 'VI_DNS':
     interface         => 'eth0',
