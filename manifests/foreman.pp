@@ -21,6 +21,21 @@ class roles::foreman (
   postfix::hash { '/etc/postfix/sender_canonical':
     ensure  => 'present',
     content => "/^(.*)@(.*).je.home\$/     \${1}.\${2}@jehome.co.uk",
-}
+  }
+
+  package { 'stunnel':
+    ensure => installed,
+  } ->
+  file { '/etc/stunnel/blueyonder.conf':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0600',
+    source => 'puppet:///modules/roles/foreman/stunnel_blueyonder.conf',
+  } ~>
+  service { 'stunnel@blueyonder.service':
+    ensure => running,
+    enable => true,
+  }
 
 }
