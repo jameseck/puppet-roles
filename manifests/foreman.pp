@@ -23,9 +23,8 @@ class roles::foreman (
     content => "/^(.*)@(.*).je.home\$/     \${1}.\${2}@jehome.co.uk",
   }
 
-  package { 'stunnel':
-    ensure => installed,
-  } ->
+  include '::profiles::stunnel'
+  Class['profiles::stunnel'] ->
   file { '/etc/stunnel/blueyonder.conf':
     ensure => file,
     owner  => 'root',
