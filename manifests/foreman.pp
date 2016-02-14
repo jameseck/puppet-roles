@@ -18,4 +18,9 @@ class roles::foreman (
 
   include '::profiles::keepalived_dns'
 
+  postfix::hash { '/etc/postfix/sender_canonical':
+    ensure  => 'present',
+    content => "/^(.*)@(.*).je.home\$/     \${1}.\${2}@jehome.co.uk",
+}
+
 }
