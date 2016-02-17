@@ -1,6 +1,9 @@
 class roles::foreman (
 ) {
 
+  include '::puppetdb'
+  include '::puppetdb::master::config'
+
   sysctl { 'net.ipv4.ip_nonlocal_bind':
     ensure    => 'present',
     permanent => 'yes',
