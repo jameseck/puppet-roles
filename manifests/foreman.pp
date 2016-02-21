@@ -25,7 +25,7 @@ class roles::foreman (
 
   notify { $postfix_config: }
 
-  create_resources('postfix::config', $postfix_config)
+  #create_resources('postfix::config', $postfix_config)
 
   postfix::hash { '/etc/postfix/sender_canonical':
     ensure  => 'present',
