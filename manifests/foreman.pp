@@ -21,7 +21,7 @@ class roles::foreman (
 
   include '::profiles::keepalived_dns'
 
-  $postfix_config = hiera('postfix::config')
+  $postfix_config = hiera('postfix_config')
 
   create_resources('postfix::config', $postfix_config)
 
