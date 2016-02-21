@@ -21,6 +21,10 @@ class roles::foreman (
 
   include '::profiles::keepalived_dns'
 
+  $postfix_config = hiera('postfix::config')
+
+  create_resources('postfix::config', $postfix_config)
+
   postfix::hash { '/etc/postfix/sender_canonical':
     ensure  => 'present',
     content => "/^(.*)@(.*).je.home\$/     \${1}.\${2}@jehome.co.uk",
