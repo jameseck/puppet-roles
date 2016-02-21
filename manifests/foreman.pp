@@ -23,6 +23,8 @@ class roles::foreman (
 
   $postfix_config = hiera('postfix_config')
 
+  notify { $postfix_config: }
+
   create_resources('postfix::config', $postfix_config)
 
   postfix::hash { '/etc/postfix/sender_canonical':
