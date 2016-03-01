@@ -1,4 +1,4 @@
-class fh_roles::docker (
+class roles::docker (
 ) {
 
   include '::docker'
